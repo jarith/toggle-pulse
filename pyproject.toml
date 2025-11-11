@@ -1,0 +1,66 @@
+[project]
+name = "python-starter-template"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.404",
+    "pytest>=8.4.1",
+    "ruff>=0.12.11",
+]
+
+[build-system]
+requires = ["uv_build>=0.8.15,<0.9.0"]
+build-backend = "uv_build"
+
+[project.scripts]
+app = "python_starter_template:main"
+
+[tool.pyright]
+typeCheckingMode = "strict"
+venvPath = "."
+venv = ".venv"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+exclude = ["build", "dist", ".venv", ".uv", "uv.lock", "venv", ".git", ".gitignore", ".python-version", "__pycache__", ".pytest_cache", ".ruff_cache"]
+
+[tool.ruff.lint]
+select = [
+  "E","F","I",        # pycodestyle errors, pyflakes, import sorting
+  "B","UP","SIM","C4",# bugbear, pyupgrade, simplify, comprehensions
+  "N","A","ARG",      # naming, don't shadow builtins, unused-args
+  "PL","PLC","PLE","PLR","PLW",  # pylint-derived (readability/complexity/warnings)
+  "BLE","TRY",        # exception hygiene
+  "PTH","T20","ERA",  # pathlib > os.path, forbid print, kill commented-out code
+  "ANN","D",          # (opt-in) type-annotation & docstring checks
+  "RUF"               # Ruff-specific goodies (e.g., unused noqa)
+]
+# Docstring rules have a few mutually exclusive pairs; disable the ones we don't use.
+ignore = ["D100","D103","D104","D203","D213","PLR2004"]
+
+[tool.ruff.lint.pydocstyle]
+# Pick one: "google" or "numpy"
+convention = "google"
+
+# Make tests less noisy (prints ok, docstrings optional there).
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D", "T20", "ANN", "ARG001"]
+
+[tool.pytest.ini_options]
+testpaths = ["src"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.poe.tasks]
+run = "uv run --env-file .env -m src.python_starter_template"
+lint = "ruff check"
+typecheck = "pyright"
+format = "ruff format"
+test = "pytest -q"
