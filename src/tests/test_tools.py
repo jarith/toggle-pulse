@@ -1,4 +1,4 @@
-from python_starter_template.tools import add, sub
+from toggle_pulse.tools import add, sub
 
 
 def test_add() -> None:
