@@ -63,7 +63,9 @@ convention = "google"
 
 # Make tests less noisy (prints ok, docstrings optional there).
 [tool.ruff.lint.per-file-ignores]
+"src/tests/**" = ["D", "T20", "ANN", "ARG001"]
 "tests/**" = ["D", "T20", "ANN", "ARG001"]
+"src/toggle_pulse/**" = ["D"]
 
 [tool.pytest.ini_options]
 testpaths = ["src"]
